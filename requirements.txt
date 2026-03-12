@@ -1,0 +1,4 @@
+runpod
+requests
+firebase-admin
+Pillow
