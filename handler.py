@@ -21,6 +21,7 @@ if not firebase_admin._apps:
         raise EnvironmentError("FIREBASE_SERVICE_ACCOUNT environment variable is not set")
 
     key_data = json.loads(service_account_json)
+    print("USING SERVICE ACCOUNT:", key_data.get("client_email"))
     print("FIREBASE PROJECT ID:", key_data.get("project_id"))
     print("FIREBASE CLIENT EMAIL:", key_data.get("client_email"))
     print("FIREBASE PRIVATE KEY START:", str(key_data.get("private_key", ""))[:40])
@@ -183,5 +184,3 @@ def handler(job):
 
 
 runpod.serverless.start({"handler": handler})
-
-
