@@ -16,11 +16,16 @@ from firebase_admin import credentials, storage
 # Firebase setup
 # -----------------------------
 if not firebase_admin._apps:
+    with open("/app/serviceAccountKey.json", "r", encoding="utf-8") as f:
+        key_data = json.load(f)
+        print("FIREBASE PROJECT ID:", key_data.get("project_id"))
+        print("FIREBASE CLIENT EMAIL:", key_data.get("client_email"))
+        print("FIREBASE PRIVATE KEY START:", str(key_data.get("private_key", ""))[:40])
+
     cred = credentials.Certificate("/app/serviceAccountKey.json")
     firebase_admin.initialize_app(cred, {
         "storageBucket": "impulse-upscaler.firebasestorage.app"
     })
-
 bucket = storage.bucket()
 
 # -----------------------------
@@ -171,5 +176,6 @@ def handler(job):
             "success": False,
             "error": str(e)
         }
+
 
 runpod.serverless.start({"handler": handler})
